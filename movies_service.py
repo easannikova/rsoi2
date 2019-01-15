@@ -3,6 +3,7 @@ import flask
 from flask import jsonify
 from flask import request
 import json
+import math
 
 app = flask.Flask(__name__)
 
@@ -132,6 +133,33 @@ def delete_movie(movie_id):
         delete = cur.execute(query)
         db.commit()
         return jsonify({'Result of deleting': 'Succes'})
+
+
+@app.route('/api/1.0/movies/size=<int:size>&index=<int:index>', methods=['GET'])
+def get_movies_pagination(size, index):
+    with db_conn() as db:
+        cur = db.cursor()
+        cur.execute('SELECT * from movies;')
+        rows = cur.fetchall()
+        movies = []
+        for row in rows:
+            movies.append({"id": row[0], "title": row[1], "year": row[2], "country": row[3], "genre": row[4], "rating": row[5], "FC": row[6]})
+        cnt = len(movies)
+        pageCount = math.ceil(cnt/size)
+        if (index > pageCount):
+            return  'Page not found!'
+        left = size*(index-1)
+        if left < 0:
+            left = 0
+        right = size*index
+        '''if right > cnt:
+            right = '''
+        movies = movies[left:right]
+        print(left, right, movies)
+        return jsonify({"movies": movies})
+        #return True
+#pageSize=3&pageIndex=0
+        
 
 if __name__ == '__main__':
     app.debug = True  # enables auto reload during development
