@@ -1,0 +1,24 @@
+curl -XGET 'http://127.0.0.1:5000/api/1.0/movies/2'
+curl -i -H "Content-Type: application/json" -X POST -d '{"id": 6, "title": "Mirror", "country": "Russia"}' 'localhost:5000/api/1.0/halls'
+curl -i "Content-Type: application/json" -X DELETE 'localhost:5000/api/1.0/movies/5'
+curl -XGET 'http://127.0.0.1:5000/api/1.0/halls/2'
+curl -i -H "Content-Type: application/json" -X POST -d '{"id": 6, "title": "Mirror", "country": "Russia"}' 'localhost:5000/api/1.0/halls'
+curl -i "Content-Type: application/json" -X DELETE 'localhost:5000/api/1.0/halls/5'
+
+sudo -u postgres createdb seansesDB -O sea
+hallsDB=> CREATE TABLE halls(
+hallsDB(> id int primary key,
+hallsDB(> number int,
+hallsDB(> floor int,
+hallsDB(> seats_count int,
+hallsDB(> is3D bool
+hallsDB(> );
+psql hallsDB
+insert into halls values (1, 1, 1, 30, True);
+select * from halls;
+insert into seanses values (1, '30.12.2018', '20:00', 1, 1, 6);
+
+
+curl -i -H "Content-Type: application/json" -X CHANGE_HALL -d '{"new_number": '100'}' 'localhost:5005/api/1.0/halls/6'
+
+
