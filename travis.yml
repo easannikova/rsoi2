@@ -1,7 +1,0 @@
-language: python
-script:
-  - python -m pytest -v
-deploy:
-  provider: heroku
-  app: searsoi1
-  api_key: c08992d1-e9b3-432c-81ba-978c0cd82820
